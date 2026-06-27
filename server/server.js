@@ -1,18 +1,11 @@
 import express from "express";
+import notesRoutes from "./routes/notesRoutes.js"
+import { getAllNotes } from './controllers/notesController.js';
 
 const app = express();
 
-app.get("/api/notes", (req, res) => {
-    res.send("you got 5 notes");
-});
+app.use("/api/notes", notesRoutes);
 
-app.post("/api/notes", (req,res) => { 
-    res.status(201).send({message:"post has been created successfully"})
-});
-
-app.update("/api/notes", (req,res) => { 
-    res.status(20).send({message:"post has been updated successfully"})
-});
 
 
 app.listen(5001, () => {

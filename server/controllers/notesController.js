@@ -3,7 +3,7 @@ import Note from './../models/Note.js';
 
 export async function getAllNotes (req, res) {
     try {
-        const notes = await Note.find()
+        const notes = await Note.find().sort({createdAt: -1}); // .sort is categorizing notes in order by creation
         res.status(200).json(notes)
     } catch (error) {
         console.error("Error is in getAll function from controller", error)
@@ -11,6 +11,16 @@ export async function getAllNotes (req, res) {
         
     };
 };
+
+export async function getOneNote( req, res) {
+    try {
+        const oneNote = await Note.findById(req.params.id);
+        if (!oneNote) return res.status(404).json({message: "Node not found"});
+    } catch (error) {
+        console.error("Error is in getOneNote function from controller", error)
+        res.status(500).json({message:"Internal server Error"})
+    }
+}
 
 export async function createNote (req, res) {
     try {
@@ -28,18 +38,28 @@ export async function createNote (req, res) {
 
 export async function updateNote (req, res) {
     try {
-        const {title,content}=req.body
-        await Note.findByIdAndUpdate(req.params.id, {title, content})
-            res.status(200).json({message: "You have updated data within the database using the API method 'put' "})
+        const {title,content}=req.body;
+        const updatedNote = await Note.findByIdAndUpdate(req.params.id, {title, content},{
+            new: true // By default, findOneAndUpdate() returns the document as it was before update was applied. If you set new: true, findOneAndUpdate() will instead give you the object after update was applied.
+        });
+        if (!updatedNote) return res.status(404).json({message: "Node not found"});
+        res.status(200).json({message: "You have updated data within the database using the API method 'put' "});
         
     } catch (error) {
-        console.error("Error is in updateNote function from controller", error)
-        res.status(500).json({message:"Internal server Error"})
+        console.error("Error is in updateNote function from controller", error);
+        res.status(500).json({message:"Internal server Error"});
     }
 
 };
 
-export function deleteNote (req, res) {
-    res.status(200).send({message: "You just deleted data from the database using the API method 'delete'"})
+export async function deleteNote (req, res) {
+    try {
+        const deletedNote = await Note.findByIdAndDelete(req.params.id)
+        if (!deletedNote) return res.status(404).json({message: "Node not found"});
+        res.status(200).send({message: "You just deleted data from the database using the API method 'delete'"})
+    } catch (error) {
+        console.error("Error is in updateNote function from controller", error);
+        res.status(500).json({message:"Internal server Error"});
+    }
 
 };

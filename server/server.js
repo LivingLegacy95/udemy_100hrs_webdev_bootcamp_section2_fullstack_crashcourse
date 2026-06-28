@@ -8,13 +8,17 @@ dotenv.config();
 
 const app = express();
 
-app.use("/api/notes", notesRoutes);
+const PORT = process.env.PORT || 5001 // is best convention to put your port number in the .env file and create a variable for the PORT.
 
 connectDB();
+// middleware needed to read data from json
+app.use(express.json())
+
+app.use("/api/notes", notesRoutes);
+
 
 console.log(process.env.MONGO_URI) // returns undefined in terminal unless you import 'dotenv'
 
-const PORT = process.env.PORT || 5001 // is best convention to put your port number in the .env file and create a variable for the PORT.
 
 app.listen(PORT, () => {
     console.log("Server started on PORT:", PORT);

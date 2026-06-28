@@ -1,7 +1,7 @@
 
 import Note from './../models/Note.js';
 
-export async function getAllNotes (req, res) {
+export async function getAllNotes (_, res) {
     try {
         const notes = await Note.find().sort({createdAt: -1}); // .sort is categorizing notes in order by creation
         res.status(200).json(notes)

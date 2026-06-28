@@ -11,6 +11,7 @@ const app = express();
 const PORT = process.env.PORT || 5001 // is best convention to put your port number in the .env file and create a variable for the PORT.
 
 connectDB();
+
 // middleware needed to read data from json
 app.use(express.json())
 

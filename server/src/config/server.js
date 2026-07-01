@@ -1,8 +1,8 @@
 import express from "express";
 import notesRoutes from "../routes/notesRoutes.js"
-import { getAllNotes } from '../controllers/notesController.js';
 import {connectDB} from "../mongoose.config.js"
 import dotenv from "dotenv";
+import rateLimiter from "./../middleware/rateLimiter.js";
 
 dotenv.config();
 
@@ -14,6 +14,7 @@ connectDB();
 
 // middleware needed to read data from json: allows access to req.body
 app.use(express.json())
+app.use(rateLimiter)
 
 
 // example of a custom middleware function
@@ -26,6 +27,7 @@ app.use("/api/notes", notesRoutes);
 
 
 console.log(process.env.MONGO_URI) // returns undefined in terminal unless you import 'dotenv'
+
 
 
 app.listen(PORT, () => {

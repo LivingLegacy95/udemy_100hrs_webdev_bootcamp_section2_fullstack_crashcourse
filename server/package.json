@@ -2,10 +2,11 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/config/server.js",
   "scripts": {
+    "start": "node src/config/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.js"
+    "dev": "nodemon src/config/server.js"
   },
   "type": "module",
   "keywords": [],

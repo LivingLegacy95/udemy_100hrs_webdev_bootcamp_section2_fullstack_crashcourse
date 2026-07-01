@@ -1,7 +1,7 @@
 import express from "express";
-import notesRoutes from "./routes/notesRoutes.js"
-import { getAllNotes } from './controllers/notesController.js';
-import {connectDB} from "./mongoose.config.js"
+import notesRoutes from "../routes/notesRoutes.js"
+import { getAllNotes } from '../controllers/notesController.js';
+import {connectDB} from "../mongoose.config.js"
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -12,8 +12,15 @@ const PORT = process.env.PORT || 5001 // is best convention to put your port num
 
 connectDB();
 
-// middleware needed to read data from json
+// middleware needed to read data from json: allows access to req.body
 app.use(express.json())
+
+
+// example of a custom middleware function
+// app.use((req, res, next) =>{
+//     console.log(`Req method is ${req.method} & Req URL is ${req.url}`);
+//     next();
+// })
 
 app.use("/api/notes", notesRoutes);
 

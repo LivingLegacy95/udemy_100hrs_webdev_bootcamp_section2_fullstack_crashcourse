@@ -8,8 +8,8 @@ export default {
   theme: {
     extend: {},
   },
-  plugins: [daisyui],
+  plugins: [daisyui],         // integrates daisyUI framework into tailwind css
   daisyui:{
-    themes: ["forest", "coffee"],
+    themes: ["forest", "coffee"],   // creating an object to set the background theme according to daisyui documentation.
   },
 };

@@ -1,6 +1,8 @@
 
 import Note from '../models/Note.js';
 
+// CRUD function: Display
+
 export async function getAllNotes (_, res) {
     try {
         const notes = await Note.find().sort({createdAt: -1}); // .sort is categorizing notes in order by creation
@@ -12,6 +14,7 @@ export async function getAllNotes (_, res) {
     };
 };
 
+// CRUD function: Read
 export async function getOneNote( req, res) {
     try {
         const oneNote = await Note.findById(req.params.id);
@@ -22,6 +25,7 @@ export async function getOneNote( req, res) {
     }
 }
 
+// CRUD function: Create
 export async function createNote (req, res) {
     try {
         const {title,content} = req.body
@@ -36,6 +40,7 @@ export async function createNote (req, res) {
     };
 };
 
+// CRUD function: Delete
 export async function updateNote (req, res) {
     try {
         const {title,content}=req.body;
@@ -58,7 +63,7 @@ export async function deleteNote (req, res) {
         if (!deletedNote) return res.status(404).json({message: "Node not found"});
         res.status(200).send({message: "You just deleted data from the database using the API method 'delete'"})
     } catch (error) {
-        console.error("Error is in updateNote function from controller", error);
+        console.error("Error is in deleteNote function from controller", error);
         res.status(500).json({message:"Internal server Error"});
     }
 

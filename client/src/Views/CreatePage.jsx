@@ -1,13 +1,36 @@
 import { ArrowLeftIcon } from "lucide-react";
 import React, { useState } from "react";
-import { Link } from "react-router";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { Link, Navigate, useNavigate } from "react-router";
 
 const CreatePage = () => {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [loading, setLoading] = useState(false);
 
-    const handleSubmit = () => {
+    const navigate = useNavigate();
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (!title.trim() || !content.trim()) {
+            toast.error("All fields required")
+            return;
+        }
+        setLoading(true)
+        try {
+            await axios.post("http://localhost:5001/api/notes", {
+                title,
+                content
+            })
+            toast.success("Note created successfully!")
+            navigate("/")
+        } catch (error) {
+            console.log("error creating note", error)
+            toast.error("Failed to create note")
+        } finally {
+            setLoading(false)
+        }
 
     }
     return (
@@ -43,6 +66,11 @@ const CreatePage = () => {
                                         value={content}
                                         onChange={(e) => setContent(e.target.value)}
                                     />
+                                </div>
+                                <div className="card-actions justify-end">
+                                    <button type="submit" className="btn btn-primary" disabled={loading}>
+                                        {loading ? "Creating.." : "Create Note"}
+                                    </button>
                                 </div>
                             </form>
                         </div>

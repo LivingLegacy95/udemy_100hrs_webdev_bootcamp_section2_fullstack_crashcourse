@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { Link, Navigate, useNavigate } from "react-router";
+import api from "../lib/axios";
 
 const CreatePage = () => {
     const [title, setTitle] = useState("");
@@ -13,13 +14,14 @@ const CreatePage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        // form validation - prevents the "server error" data from being sent to client in console log
         if (!title.trim() || !content.trim()) {
             toast.error("All fields required")
             return;
         }
         setLoading(true)
         try {
-            await axios.post("http://localhost:5001/api/notes", {
+            await api.post("/notes", {
                 title,
                 content
             })
@@ -27,10 +29,16 @@ const CreatePage = () => {
             navigate("/")
         } catch (error) {
             console.log("error creating note", error)
-            toast.error("Failed to create note")
+            if (error.response.status === 429) {
+                toast.error("Too Many Requests. Please Wait...", {
+                    duration: 4000,
+                })
+            } else {
+                toast.error("Failed to create note");
+            }
         } finally {
-            setLoading(false)
-        }
+            setLoading(false);
+        };
 
     }
     return (

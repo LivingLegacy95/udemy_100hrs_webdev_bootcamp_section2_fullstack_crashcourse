@@ -15,8 +15,8 @@ const PORT = process.env.PORT || 5001 // is best convention to put your port num
 // connectDB();
 
 // middleware needed to read data from json: allows access to req.body
+
 app.use(express.json());
-app.use(rateLimiter);
 // default for allowing traffic from any URL
 // app.use(cors());
 
@@ -24,12 +24,13 @@ app.use(rateLimiter);
 app.use(cors({
     origin: "http://localhost:5173"         // frontend root url, if more than one would need to be an array.
 }))
-
 // example of a custom middleware function
 // app.use((req, res, next) =>{
 //     console.log(`Req method is ${req.method} & Req URL is ${req.url}`);
 //     next();
 // })
+// cors method needs to go before ratelimiter for the server to send the intended 429 error for too many reuqests.
+app.use(rateLimiter);
 
 app.use("/api/notes", notesRoutes);
 

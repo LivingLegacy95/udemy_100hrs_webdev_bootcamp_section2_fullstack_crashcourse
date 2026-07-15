@@ -5,12 +5,13 @@ import { formatDate } from '../lib/utils'
 import api from '../lib/axios'
 import toast from 'react-hot-toast'
 
-const NoteCard = ({ note }) => {
+const NoteCard = ({ note, setNotes }) => {
     const handleDelete = async (e, id) => {
         e.preventDefault(); // since NoteCard is a link the default behavior when clicking on delete button is to navigate to notedetail page. This method prevents that behavior.
         if (!window.confirm("Are you sure you want to delete this note?")) return;
     }; try {
         await api.delete(`/notes/${id}`)
+        setNotes((prev) => prev.filter(note => note._id !== id)) // removes object from array
         toast.success("Note deleted successfully");
     } catch (error) {
         console.log(error, "Error in handleDelete");

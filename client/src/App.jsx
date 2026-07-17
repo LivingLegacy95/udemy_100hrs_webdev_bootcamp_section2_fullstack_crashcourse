@@ -2,7 +2,7 @@ import React from 'react'
 import { Route, Routes } from 'react-router';
 import HomePage from './Views/HomePage';
 import CreatePage from './Views/CreatePage';
-import DetailPage from './Views/DetailPage';
+import DetailPage from './Views/NoteDetailPage';
 
 const App = () => {
   return (

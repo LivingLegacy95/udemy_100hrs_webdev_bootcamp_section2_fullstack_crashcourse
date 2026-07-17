@@ -1,4 +1,4 @@
-import { LoaderIcon } from "lucide-react";
+import { ArrowLeftIcon, LoaderIcon } from "lucide-react";
 import React from "react";
 import { useNavigate, useParams } from "react-router";
 
@@ -29,7 +29,18 @@ const NoteDetailPage = () => {
     }
     return (
         <div className="min-h-screen bg-base-200">
-            <h1>DetailPage</h1>
+            <div className=" container mx-auto- px-4 py-8">
+                <div className="flex items-center justify-between mb-6">
+                    <Link to="/" className="btn btn-ghost">
+                        <ArrowLeftIcon className="h-5 w-5" />
+                        Back to Notes
+                    </Link>
+                    <button onClick={handleDelete} className="btn btn-error btn-outline">
+                        <Trash2Icon className="h-5 w-5" />
+                        Delete Note
+                    </button>
+                </div>
+            </div>
         </div>
     );
 };

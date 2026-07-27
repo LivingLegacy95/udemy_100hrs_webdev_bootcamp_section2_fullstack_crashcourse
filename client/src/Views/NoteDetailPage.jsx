@@ -1,6 +1,6 @@
 import { ArrowLeftIcon, LoaderIcon, Trash2Icon } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router";
+import { Link, useParams, useNavigate } from "react-router";
 import toast from "react-hot-toast";
 import api from "../lib/axios.js";
 
@@ -14,11 +14,13 @@ const NoteDetailPage = () => {
     useEffect(() => {
         const fetchNote = async () => {
             try {
-                const res = await api.get(`/notes/${id}`)
-                setNote(res.data)
+                const res = await api.get(`/notes/${id}`);
+                setNote(res.data);
             } catch (error) {
-                toast.error("Failed to fetch the note")
-                console.log("Failed to fetch the note", error)
+                toast.error("Failed to fetch the note");
+                console.log("Failed to fetch the note", error);
+            } finally {
+                setLoading(false);
             }
         };
 
@@ -47,15 +49,22 @@ const NoteDetailPage = () => {
                             Delete Note
                         </button>
                     </div>
-
-                    {note && (
-                        <div className="card bg-base-100 shadow-xl">
-                            <div className="card-body">
-                                <h2 className="card-title text-2xl">{note.title}</h2>
-                                <p className="whitespace-pre-wrap">{note.content}</p>
+                    <div className="card bg-base-100 shadow-xl">
+                        <div className="card-body">
+                            <div className="form-control mb-4">
+                                <label className="label">
+                                    <span className="label-text">Title</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    placeholder="Note title"
+                                    className="input input-bordered"
+                                    value={note.title}
+                                    onChange={(e) => setNote({ ...note, title: e.target.value })}
+                                />
                             </div>
                         </div>
-                    )}
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,6 +1,6 @@
 import { ArrowLeftIcon, LoaderIcon, Trash2Icon } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Link, useParams, useNavigate } from "react-router";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import api from "../lib/axios.js";
 
@@ -34,6 +34,19 @@ const NoteDetailPage = () => {
             </div>
         );
     }
+
+    if (!note) {
+        return (
+            <div className="min-h-screen bg-base-200 flex items-center justify-center">
+                <div className="text-center">
+                    <p className="text-xl font-semibold">Note not found.</p>
+                    <Link to="/" className="btn btn-ghost mt-4">Back to Notes</Link>
+                </div>
+            </div>
+        );
+    }
+
+    console.log("NoteDetailPage loaded", { id, note })
 
     return (
         <div className="min-h-screen bg-base-200">

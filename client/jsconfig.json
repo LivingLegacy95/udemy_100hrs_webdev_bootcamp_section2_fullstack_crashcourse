@@ -4,6 +4,7 @@
     "checkJs": false,
     "jsx": "react-jsx",
     "moduleResolution": "bundler",
+    "ignoreDeprecations": "6.0",
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]

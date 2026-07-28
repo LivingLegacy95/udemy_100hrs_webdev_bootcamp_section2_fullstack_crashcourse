@@ -18,7 +18,8 @@ export async function getAllNotes(_, res) {
 export async function getOneNote(req, res) {
     try {
         const oneNote = await Note.findById(req.params.id);
-        if (!oneNote) return res.status(404).json({ message: "Node not found" });
+        if (!oneNote) return res.status(404).json({ message: "Note not found" });
+        res.status(200).json(oneNote);
     } catch (error) {
         console.error("Error is in getOneNote function from controller", error)
         res.status(500).json({ message: "Internal server Error" })

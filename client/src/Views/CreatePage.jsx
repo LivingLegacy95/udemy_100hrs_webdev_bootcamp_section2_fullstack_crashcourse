@@ -2,7 +2,7 @@ import { ArrowLeftIcon } from "lucide-react";
 import React, { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { Link, Navigate, useNavigate } from "react-router";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import api from "../lib/axios.js";
 
 const CreatePage = () => {
